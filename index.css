@@ -1,0 +1,111 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    background-image:radial-gradient(rgb(235, 234, 230), rgb(13, 35, 19));
+    text-align: center;
+}
+.container{
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game{
+     height: 60vmin;
+     width: 60vmin;
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     align-items: center;
+     gap:1.5vmin;
+
+}
+.li{
+    margin: 0;
+    padding: 2rem;
+}
+.box{
+    margin-top: 0.25vmin;
+    height: 18vmin;
+    width: 18vmin;
+    border:none;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem rgba(69, 80, 39, 0.3);
+    font-size: 8vmin;
+    background-color:rgba(229, 228, 219, 0.926);
+    opacity: 0.5;
+    transition: opacity 0.1s ease-in-out;
+    -webkit-transition: opacity 0.1s ease-in-out;
+    -moz-transition: opacity 0.1s ease-in-out;
+    -ms-transition: opacity 0.1s ease-in-out;
+    -o-transition: opacity 0.1s ease-in-out;
+}
+.box:hover{
+    opacity: 1;
+}
+.h{
+    color: rgb(160, 194, 181);
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bolder;
+    margin-top: 1px;
+}
+#reset{
+    padding:1rem;
+    font-size: 1.25rem;
+    color: rgb(237, 233, 229);
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: rgb(40, 89, 70);
+    border:none;
+    border-radius:1rem;
+    -webkit-border-radius:1rem;
+    -moz-border-radius:1rem;
+    -ms-border-radius:1rem;
+    -o-border-radius:1rem;
+    box-shadow: 0 0 1rem rgba(69, 80, 39, 0.3);
+    opacity: 0.5;
+    transition: opacity 0.1s ease-in-out;
+    -webkit-transition: opacity 0.1s ease-in-out;
+    -moz-transition: opacity 0.1s ease-in-out;
+    -ms-transition: opacity 0.1s ease-in-out;
+    -o-transition: opacity 0.1s ease-in-out;
+    
+}
+#reset:hover{
+    opacity: 1;
+}
+#new{
+    padding:0.75rem;
+    font-size: 1.25rem;
+    color: rgb(237, 233, 229);
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: rgb(40, 89, 70);
+    border:none;
+    border-radius:1rem;
+    -webkit-border-radius:1rem;
+    -moz-border-radius:1rem;
+    -ms-border-radius:1rem;
+    -o-border-radius:1rem;
+    box-shadow: 0 0 1rem rgba(69, 80, 39, 0.3);
+    margin-top: 5vmin;
+}
+#ms{
+    color:rgba(229, 228, 219, 0.926) ;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 50px;
+    height:3vmin;
+}
+.msg{
+    margin-top: 20vmin;
+    height: 70vmin;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.hide{
+    display: none;
+}
