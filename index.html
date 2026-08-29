@@ -1,31 +1,62 @@
 <!DOCTYPE html>
-<html>
-    <title>TIC TAC TOE</title>
-    <link rel="stylesheet" href="index.css"/>
-    <body>
-        <div class="msg hide">
-            <p id="ms">Winner!</p>
-            <button id="new">NEW GAME</button>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A clean browser-based Tic Tac Toe game built as Joseph Fidel's first website project."
+    />
+    <title>Tic Tac Toe | Joseph Fidel</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">First website project</p>
+        <h1 id="page-title">Tic Tac Toe</h1>
+        <p class="intro-copy">
+          A simple two-player browser game built with HTML, CSS, and JavaScript.
+        </p>
+      </section>
+
+      <section class="game-panel" aria-label="Tic Tac Toe board">
+        <div class="status-row">
+          <p id="status" class="status" aria-live="polite">Player O's turn</p>
+          <button id="reset" class="secondary-button" type="button">Reset Board</button>
         </div>
-        <main>
-        <h1 class="h">TIC TAC TOE</h1>
-        <div class="container">
-         <div class="game">
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-         </div>
+
+        <div class="scoreboard" aria-label="Scoreboard">
+          <div>
+            <span>Player O</span>
+            <strong id="score-o">0</strong>
+          </div>
+          <div>
+            <span>Draws</span>
+            <strong id="score-draw">0</strong>
+          </div>
+          <div>
+            <span>Player X</span>
+            <strong id="score-x">0</strong>
+          </div>
         </div>
-        <button id="reset">Reset Button</button>
-        <div>
+
+        <div class="board" role="grid" aria-label="Game board">
+          <button class="cell" type="button" aria-label="Row 1 column 1"></button>
+          <button class="cell" type="button" aria-label="Row 1 column 2"></button>
+          <button class="cell" type="button" aria-label="Row 1 column 3"></button>
+          <button class="cell" type="button" aria-label="Row 2 column 1"></button>
+          <button class="cell" type="button" aria-label="Row 2 column 2"></button>
+          <button class="cell" type="button" aria-label="Row 2 column 3"></button>
+          <button class="cell" type="button" aria-label="Row 3 column 1"></button>
+          <button class="cell" type="button" aria-label="Row 3 column 2"></button>
+          <button class="cell" type="button" aria-label="Row 3 column 3"></button>
         </div>
-        </main>
-        <script src="app.js"></script>
-    </body>
+
+        <button id="new-round" class="primary-button" type="button">New Round</button>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
 </html>

@@ -1,90 +1,122 @@
-let boxes = document.querySelectorAll(".box");
-let reset = document.querySelector("#reset");
-let newgame = document.querySelector("#new");
-let msgcontainer = document.querySelector(".msg");
-let msgs = document.querySelector("#ms");
-let turnO = true;
-let count = 0;
+const cells = Array.from(document.querySelectorAll(".cell"));
+const statusText = document.querySelector("#status");
+const resetButton = document.querySelector("#reset");
+const newRoundButton = document.querySelector("#new-round");
+const scoreO = document.querySelector("#score-o");
+const scoreX = document.querySelector("#score-x");
+const scoreDraw = document.querySelector("#score-draw");
 
-// Fixed: last pattern was [6,7,9] — index 9 doesn't exist. Corrected to [6,7,8]
-const win = [
-    [0, 1, 2],
-    [0, 3, 6],
-    [0, 4, 8],
-    [1, 4, 7],
-    [2, 5, 8],
-    [2, 4, 6],
-    [3, 4, 5],
-    [6, 7, 8]  // <-- was [6,7,9], which is invalid
+const winningPatterns = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
 ];
 
-boxes.forEach((box) => {
-    box.addEventListener("click", () => {
-        if (turnO) {
-            box.innerText = "O";
-            turnO = false;
-        } else {
-            box.innerText = "X";
-            turnO = true;
-        }
-        box.disabled = true;
-        count++;
+const scores = {
+  O: 0,
+  X: 0,
+  draw: 0,
+};
 
-        // Fixed: only call checkwinner once and use its return value
-        let isWinner = checkwinner();
+let currentPlayer = "O";
+let board = Array(9).fill("");
+let roundOver = false;
 
-        if (count === 9 && !isWinner) {
-            gamedraw();
-        }
-    });
+function renderScores() {
+  scoreO.textContent = scores.O;
+  scoreX.textContent = scores.X;
+  scoreDraw.textContent = scores.draw;
+}
+
+function setStatus(message) {
+  statusText.textContent = message;
+}
+
+function findWinner() {
+  for (const pattern of winningPatterns) {
+    const [a, b, c] = pattern;
+    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      return { winner: board[a], pattern };
+    }
+  }
+
+  return null;
+}
+
+function endRound(result) {
+  roundOver = true;
+
+  if (result.winner) {
+    scores[result.winner] += 1;
+    setStatus(`Player ${result.winner} wins`);
+    result.pattern.forEach((index) => cells[index].classList.add("winning-cell"));
+  } else {
+    scores.draw += 1;
+    setStatus("Round drawn");
+  }
+
+  cells.forEach((cell) => {
+    cell.disabled = true;
+  });
+  renderScores();
+}
+
+function playTurn(index) {
+  if (roundOver || board[index]) {
+    return;
+  }
+
+  board[index] = currentPlayer;
+  cells[index].textContent = currentPlayer;
+  cells[index].classList.add(currentPlayer === "O" ? "mark-o" : "mark-x");
+  cells[index].disabled = true;
+
+  const result = findWinner();
+  if (result) {
+    endRound(result);
+    return;
+  }
+
+  if (board.every(Boolean)) {
+    endRound({ winner: null });
+    return;
+  }
+
+  currentPlayer = currentPlayer === "O" ? "X" : "O";
+  setStatus(`Player ${currentPlayer}'s turn`);
+}
+
+function resetBoard() {
+  currentPlayer = "O";
+  board = Array(9).fill("");
+  roundOver = false;
+  setStatus("Player O's turn");
+
+  cells.forEach((cell) => {
+    cell.textContent = "";
+    cell.disabled = false;
+    cell.classList.remove("mark-o", "mark-x", "winning-cell");
+  });
+}
+
+function resetGame() {
+  scores.O = 0;
+  scores.X = 0;
+  scores.draw = 0;
+  renderScores();
+  resetBoard();
+}
+
+cells.forEach((cell, index) => {
+  cell.addEventListener("click", () => playTurn(index));
 });
 
-const gamedraw = () => {
-    msgs.innerText = "Game was a Draw";
-    msgcontainer.classList.remove("hide");
-    disableboxes();
-};
+newRoundButton.addEventListener("click", resetBoard);
+resetButton.addEventListener("click", resetGame);
 
-const disableboxes = () => {
-    for (let box of boxes) {
-        box.disabled = true;
-    }
-};
-
-const showWinner = (winner) => {
-    msgs.innerText = `Congratulations, Winner is ${winner}`;
-    msgcontainer.classList.remove("hide");
-    disableboxes();
-};
-
-const checkwinner = () => {
-    for (let pattern of win) {
-        let p1 = boxes[pattern[0]].innerText;
-        let p2 = boxes[pattern[1]].innerText;
-        let p3 = boxes[pattern[2]].innerText;
-        if (p1 !== "" && p2 !== "" && p3 !== "") {
-            if (p1 === p2 && p2 === p3) {
-                showWinner(p1);
-                return true;
-            }
-        }
-    }
-    return false;
-};
-
-const enableboxes = () => {
-    for (let box of boxes) {
-        box.disabled = false;
-        box.innerText = "";
-    }
-    msgcontainer.classList.add("hide");
-    count = 0; // Fixed: moved outside the loop — only needs to reset once
-};
-
-const resetGame = () => {
-    turnO = true;
-    enableboxes();
-};
-
-newgame.addEventListener("click", resetGame);
-reset.addEventListener("click", resetGame);
+renderScores();
